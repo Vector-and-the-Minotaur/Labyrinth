@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "6b8c731720178c5c80f1d8e351bb850cbcf6d664196a25affa7d3672af8f4886"
+            "sha256": "0abff80128a348430075280a049029a21bb203c0c04266d5b3b69be6a3c25d88"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -24,6 +24,9 @@
             "version": "==1.6"
         },
         "anki-vector": {
+            "extras": [
+                "3dviewer"
+            ],
             "hashes": [
                 "sha256:2ddea7a0a3e98e6358b44b652337df5379510d35a4bfa833cf98aa6580d229b9"
             ],
@@ -266,6 +269,7 @@
                 "sha256:ef6be704ae2bc8ad0ebc5cb850ee9139493b0fc4e81abcc240fb392a63ebc808",
                 "sha256:f8dc19d92896558f9c4317ee365729ead9d7bbcf2052a9a19a3ef17abbb8ac5b"
             ],
+            "index": "pypi",
             "version": "==6.1.0"
         },
         "protobuf": {
@@ -291,10 +295,16 @@
         },
         "pycparser": {
             "hashes": [
-                "sha256:700e1c986389b2c2aa5ec294ce4b7728760bf3160efeedf33530f9b28a03901b",
                 "sha256:a988718abfad80b6b157acce7bf130a30876d27603738ac39f140993246b25b3"
             ],
             "version": "==2.19"
+        },
+        "pyopengl": {
+            "hashes": [
+                "sha256:9b47c5c3a094fa518ca88aeed35ae75834d53e4285512c61879f67a48c94ddaf",
+                "sha256:efa4e39a49b906ccbe66758812ca81ced13a6f26931ab2ba2dba2750c016c0d0"
+            ],
+            "version": "==3.1.0"
         },
         "requests": {
             "hashes": [
