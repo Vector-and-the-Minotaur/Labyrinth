@@ -55,10 +55,13 @@ def turn_left_at_obstacle():
 def glyph_react():
     def glyph_react_right():
         with anki_vector.Robot(enable_custom_object_detection=True) as robot:
-            robot.world.define_custom_cube(custom_object_type=CustomObjectTypes.CustomType00,
-                                        marker=CustomObjectMarkers.Circles2,
-                                        size_mm=20.0,
-                                        marker_width_mm=50.0, marker_height_mm=50.0)
+            robot.world.define_custom_wall(custom_object_type=CustomObjectTypes.CustomType00,
+                                           marker=CustomObjectMarkers.Circles2,
+                                           width_mm= 50.0, 
+                                           height_mm= 50.0,
+                                           marker_width_mm=50.0,
+                                           marker_height_mm=50.0,
+                                           is_unique=True)
             
             for obj in robot.world.visible_custom_objects:
                 print('custom object seen with archetype: {0}'.format(obj.archetype))
@@ -70,7 +73,7 @@ def glyph_react():
                     robot.behavior.say_text('You remind me of the babe')
 
             react_to_pic()
-            turn_right_at_obstacle()
+            # turn_right_at_obstacle()
 
     def glyph_react_left():
         with anki_vector.Robot(enable_custom_object_detection=True) as robot:
@@ -86,10 +89,10 @@ def glyph_react():
                 args = anki_vector.util.parse_command_args()
                 with anki_vector.Robot(args.serial) as robot:
                     print('Vector sees the image')
-                    robot.behavior.say_text('Turning left now.')
+                    robot.behavior.say_text('left turn time')
 
             react_to_pic()
-            turn_left_at_obstacle()
+            # turn_left_at_obstacle()
 
     glyph_react_right()
     glyph_react_left()
