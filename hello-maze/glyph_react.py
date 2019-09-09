@@ -19,7 +19,7 @@ def glyph_react():
             args = anki_vector.util.parse_command_args()
             with anki_vector.Robot(args.serial) as robot:
                 print('Vector sees the image')
-                robot.behavior.say_text('I see the marker')
+                robot.behavior.say_text('I see the marker. Yay Vector!')
 
         react_to_pic()
 
