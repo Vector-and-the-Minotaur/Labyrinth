@@ -63,7 +63,7 @@ def glyph_react():
 
     def glyph_react_right():
         with anki_vector.Robot(enable_custom_object_detection=True) as robot:
-            robot.world.define_custom_wall(custom_object_type=CustomObjectTypes.CustomType00,
+            robot.world.define_custom_wall(custom_object_type=CustomObjectTypes.CustomType01,
                                         marker=CustomObjectMarkers.Circles2,
                                         width_mm= 50.0,
                                         height_mm= 50.0,
@@ -85,7 +85,7 @@ def glyph_react():
 
     def glyph_react_left():
         with anki_vector.Robot(enable_custom_object_detection=True) as robot:
-            robot.world.define_custom_cube(custom_object_type=CustomObjectTypes.CustomType00,
+            robot.world.define_custom_cube(custom_object_type=CustomObjectTypes.CustomType02,
                                         marker=CustomObjectMarkers.Diamonds2,
                                         size_mm=20.0,
                                         marker_width_mm=50.0, marker_height_mm=50.0)
