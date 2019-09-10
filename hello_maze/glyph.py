@@ -9,10 +9,10 @@ class Glyph:
     self.turn_direction = turn_direction
 
     with anki_vector.Robot(enable_custom_object_detection=True) as robot:
-      wall_right_turn = robot.world.define_custom_wall(custom_object_type = type_num, 
+      wall_turn = robot.world.define_custom_wall(custom_object_type = type_num, 
         marker= glyph_type,
-        width_mm=50,
-        height_mm=50.0,
+        width_mm=152.4,
+        height_mm=152.4,
         marker_width_mm=50.0,
         marker_height_mm=50.0,
         is_unique=True)
