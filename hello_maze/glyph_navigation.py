@@ -13,26 +13,26 @@ known_glyphs = {
   'stop': Glyph(CustomObjectMarkers.Hexagons2, 'stop', CustomObjectTypes.CustomType10)
 }
 
-@connection._on_connection_thread()
+
 async def wait_for_control(conn: anki_vector.connection.Connection): 
   await conn.control_granted_event.wait()
   return True
 
-@connection._on_connection_thread()
+
 async def auto_reconnect(conn: anki_vector.connection.Connection): 
   await conn.control_lost_event.wait() 
   conn.request_control()
 
 def handle_object_appeared(robot, event_type, event):
-    print('Vector started seeing a marker')
+    print('Vector started seeing a marker', event_type, event)
     return True
 
 def handle_object_disappeared(robot, event_type, event):
-    print('Vector stopped seeing the marker')
+    print('Vector stopped seeing the marker', event_type, event)
     return True
 
 def handle_object_observed(robot, event_type, event):
-  #print(f'Vector recognized {event}')
+  print('Vector recognized', event_type, event)
   return True
 
 def move_straight(robot): 
