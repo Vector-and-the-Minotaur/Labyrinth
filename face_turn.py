@@ -42,8 +42,8 @@ def turn_left_at_obstacle():
 
         # TODO: only move straight till he sees a wall.
 
-        def move_straight():
-            robot.behavior.drive_straight(distance_mm(300), speed_mmps(100))
+        # def move_straight():
+        #     robot.behavior.drive_straight(distance_mm(300), speed_mmps(100))
 
         def say_hi():
             args = anki_vector.util.parse_command_args()
@@ -56,20 +56,28 @@ def turn_left_at_obstacle():
         # move_straight()
 
 def main():
+    current_face = 0
     def on_robot_observed_face(robot, event_type, event, done):
-        print("Vector sees a face")
+        # print(event.face_id)
+        name_data_list = robot.faces.request_enrolled_names()
         global said_text
         if not said_text:
-            turn_left_at_obstacle()
-            said_text = True
-            robot.behavior.say_text("I see a face!")
-            done.set()
+            if event.face_id == name_data_list.faces[3].face_id:
+                robot.behavior.say_text("I see a Merry!")
+                turn_left_at_obstacle()
+                said_text = True
+                done.set()
+            if event.face_id == name_data_list.faces[0].face_id:
+                robot.behavior.say_text("I see a Raven! I win.")
+                said_text = True
+                done.set()
+
 
     args = anki_vector.util.parse_command_args()
     with anki_vector.Robot(args.serial, enable_face_detection=True) as robot:
 
         # If necessary, move Vector's Head and Lift to make it easy to see his face
-        robot.behavior.set_head_angle(degrees(45.0))
+        robot.behavior.set_head_angle(degrees(15.0))
         robot.behavior.set_lift_height(0.0)
 
         done = threading.Event()
@@ -88,7 +96,7 @@ def main():
 
 if __name__ == '__main__':
     count = 0
-    while count < 4:
+    while count < 3:
         count += 1
         main()
-        time.sleep(2)
+        time.sleep(20)
