@@ -5,12 +5,15 @@ trying to create recognition of custom markers in Vector
 import anki_vector
 from anki_vector.objects import CustomObjectMarkers, CustomObjectTypes
 from anki_vector.util import distance_mm, speed_mmps, degrees
+<<<<<<< HEAD
+=======
 import time
 
 
 '''
 right turn code below
 '''
+>>>>>>> 49baf9eb39e9c11157de937e9346b0ed6237feee
 
 def turn_right_at_obstacle():
 
@@ -34,10 +37,13 @@ def turn_right_at_obstacle():
         move_straight()
         say_hi()
 
+<<<<<<< HEAD
+=======
 
 '''
 left turn code below
 '''
+>>>>>>> 49baf9eb39e9c11157de937e9346b0ed6237feee
 def turn_left_at_obstacle():
 
     with anki_vector.Robot() as robot:
@@ -60,6 +66,15 @@ def turn_left_at_obstacle():
         move_straight()
         say_hi()
 
+<<<<<<< HEAD
+def glyph_react():
+
+    with anki_vector.Robot(enable_custom_object_detection=True) as robot:
+        wall_right_turn = robot.world.define_custom_wall(custom_object_type = CustomObjectTypes.CustomType00, 
+            marker=CustomObjectMarkers.Circles2,
+            width_mm=50,
+            height_mm= 50.0,
+=======
 """
 Called whenever object comes into view
 """
@@ -76,6 +91,19 @@ def glyph_react():
 
     args = anki_vector.util.parse_command_args()
 
+    def react_to_circle():
+        args = anki_vector.util.parse_command_args()
+        with anki_vector.Robot(args.serial) as robot:
+            print('Vector sees the image')
+            robot.behavior.say_text('I see circles')
+
+    def react_to_triangle():
+        args = anki_vector.util.parse_command_args()
+        with anki_vector.Robot(args.serial) as robot:
+            print('Vector sees the image')
+            robot.behavior.say_text('I see triangles')
+
+
     with anki_vector.Robot(args.serial,
                             default_logging=False,
                             show_viewer=True,
@@ -88,25 +116,30 @@ def glyph_react():
         robot.events.subscribe(handle_object_appeared, anki_vector.events.Events.object_appeared)
         robot.events.subscribe(handle_object_disappeared, anki_vector.events.Events.object_disappeared)
 
-        # wall_right_turn = robot.world.define_custom_wall(custom_object_type = CustomObjectTypes.CustomType00, 
-        #     marker=CustomObjectMarkers.Circles2,
-        #     width_mm=150,
-        #     height_mm= 150.0,
-        #     marker_width_mm=50.0,
-        #     marker_height_mm=50.0,
-        #     is_unique=True)
-        
-        # wall_left_turn = robot.world.define_custom_wall(custom_object_type = CustomObjectTypes.CustomType01, 
-        #     marker=CustomObjectMarkers.Triangles2,
-        #     width_mm=150,
-        #     height_mm= 150.0,
-        #     marker_width_mm=50.0,
-        #     marker_height_mm=50.0,
-        #     is_unique=True)
+        """
+        Define a unique new wall marker
+        """
 
+        wall_right_turn = robot.world.define_custom_wall(custom_object_type = CustomObjectTypes.CustomType00, 
+            marker=CustomObjectMarkers.Circles2,
+            width_mm=150,
+            height_mm= 150.0,
+            marker_width_mm=50.0,
+            marker_height_mm=50.0,
+            is_unique=True)
+        
+        wall_left_turn = robot.world.define_custom_wall(custom_object_type = CustomObjectTypes.CustomType01, 
+            marker=CustomObjectMarkers.Triangles2,
+            width_mm=150,
+            height_mm= 150.0,
+>>>>>>> 49baf9eb39e9c11157de937e9346b0ed6237feee
+            marker_width_mm=50.0,
+            marker_height_mm=50.0,
+            is_unique=True)
+
+<<<<<<< HEAD
     def glyph_react_right():
         with anki_vector.Robot(enable_custom_object_detection=True) as robot:
-            breakpoint()
             robot.world.define_custom_wall(custom_object_type=CustomObjectTypes.CustomType00,
                                         marker=CustomObjectMarkers.Circles2,
                                         width_mm= 50.0,
@@ -119,7 +152,6 @@ def glyph_react():
                 print('custom object seen with archetype: {0}'.format(obj.archetype))
 
             def react_to_pic():
-                
                 args = anki_vector.util.parse_command_args()
                 with anki_vector.Robot(args.serial) as robot:
                     print('Vector sees the image')
@@ -130,13 +162,13 @@ def glyph_react():
 
     def glyph_react_left():
         with anki_vector.Robot(enable_custom_object_detection=True) as robot:
-            robot.world.define_custom_cube(custom_object_type=CustomObjectTypes.CustomType01,
+            robot.world.define_custom_cube(custom_object_type=CustomObjectTypes.CustomType00,
                                         marker=CustomObjectMarkers.Diamonds2,
                                         size_mm=20.0,
                                         marker_width_mm=50.0, marker_height_mm=50.0)
             
             for obj in robot.world.visible_custom_objects:
-                print('custom object seen with archetype: {1}'.format(obj.archetype))
+                print('custom object seen with archetype: {0}'.format(obj.archetype))
 
             def react_to_pic():
                 args = anki_vector.util.parse_command_args()
@@ -146,8 +178,59 @@ def glyph_react():
 
             react_to_pic()
             turn_left_at_obstacle()
+    if wall_right_turn:
+        glyph_react_right()
+=======
+        if (wall_right_turn is not None):
+            react_to_circle()
+        if (wall_left_turn is not None):
+            react_to_triangle()
 
+    # def glyph_react_right():
+    #     with anki_vector.Robot(enable_custom_object_detection=True) as robot:
+    #         robot.world.define_custom_wall(custom_object_type=CustomObjectTypes.CustomType00,
+    #                                     marker=CustomObjectMarkers.Circles2,
+    #                                     width_mm= 50.0,
+    #                                     height_mm= 50.0,
+    #                                     marker_width_mm=50.0,
+    #                                     marker_height_mm=50.0,
+    #                                     is_unique=True)
+            
+    #         for obj in robot.world.visible_custom_objects:
+    #             print('custom object seen with archetype: {0}'.format(obj.archetype))
 
+    #         def react_to_pic():
+    #             args = anki_vector.util.parse_command_args()
+    #             with anki_vector.Robot(args.serial) as robot:
+    #                 print('Vector sees the image')
+    #                 robot.behavior.say_text('You remind me of the babe')
+
+    #         react_to_pic()
+    #         turn_right_at_obstacle()
+
+    # def glyph_react_left():
+    #     with anki_vector.Robot(enable_custom_object_detection=True) as robot:
+    #         robot.world.define_custom_cube(custom_object_type=CustomObjectTypes.CustomType00,
+    #                                     marker=CustomObjectMarkers.Diamonds2,
+    #                                     size_mm=20.0,
+    #                                     marker_width_mm=50.0, marker_height_mm=50.0)
+            
+    #         for obj in robot.world.visible_custom_objects:
+    #             print('custom object seen with archetype: {0}'.format(obj.archetype))
+
+    #         def react_to_pic():
+    #             args = anki_vector.util.parse_command_args()
+    #             with anki_vector.Robot(args.serial) as robot:
+    #                 print('Vector sees the image')
+    #                 robot.behavior.say_text('Turning left now.')
+
+    #         react_to_pic()
+    #         turn_left_at_obstacle()
+    # if wall_right_turn:
+    #     glyph_react_right()
+>>>>>>> 49baf9eb39e9c11157de937e9346b0ed6237feee
+
+    # glyph_react_left()
 
 if __name__ == "__main__":
     glyph_react()
