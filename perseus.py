@@ -8,11 +8,9 @@ def turn_right_at_obstacle():
 
     with anki_vector.Robot() as robot:
 
+
         def right_turn():
             robot.behavior.turn_in_place(degrees(-90))
-
-
-        # TODO: only move straight til he sees a wall.
 
         def move_straight():
             robot.behavior.drive_straight(distance_mm(300), speed_mmps(100))
