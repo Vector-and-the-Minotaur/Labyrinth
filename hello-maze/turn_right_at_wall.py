@@ -19,23 +19,15 @@ def main():
         # robot.behavior.say_text('I sees a thing.')
         object_dist = robot.proximity.last_sensor_reading.distance
         stopping_distance = object_dist.distance_mm - 50.0
-        print(dir(object_dist))
-        print(object_dist)
-        print(object_dist.distance_mm)
+        print(f'Distance from object: {object_dist.distance_mm}')
+        print(f'Stopping distance: {stopping_distance}')
         print("Go straight.")
-        # robot.behavior.say_text('I go strights.')
+        robot.behavior.say_text('I go strights.')
         robot.behavior.drive_straight(distance_mm(stopping_distance), speed_mmps(50))
         robot.motors.stop_all_motors()
-
-        # proximity_data = robot.proximity.last_sensor_reading
-        # if proximity_data is not None:
-        #     if proximity_data.distance == 50:
-        #         
-        #         print('Proximity distance: {0}'.format(proximity_data.distance))
-
-        #     print("Turn right 90 degrees.")
-        #     robot.behavior.say_text("I go rights." )
-        #     robot.behavior.turn_in_place(degrees(-90))
+        print("Turn right 90 degrees.")
+        robot.behavior.say_text("I go rights." )
+        robot.behavior.turn_in_place(degrees(-90))
 
         # robot.behavior.drive_on_charger()
         
