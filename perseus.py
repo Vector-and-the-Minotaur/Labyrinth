@@ -5,18 +5,21 @@ from anki_vector.util import distance_mm, speed_mmps, degrees
 from anki_vector import behavior
 from anki_vector.events import Events
 
-from nav import face_turn, right_at_wall
+from nav import right_at_wall
 
+args = anki_vector.util.parse_command_args()
 
-
-def perseus(victory_flag=False): 
+with anki_vector.Robot(args.serial, enable_face_detection=True) as robot:
     
-    if not victory_flag: 
-
-        if right_at_wall() == False: 
-            perseus(victory_flag=False)
-        else: 
-            perseus(victory_flag=True)    
+    def perseus(victory_flag=False): 
         
-    
+        if not victory_flag: 
+
+            if right_at_wall() == False: 
+                perseus(victory_flag=False)
+            else: 
+                perseus(victory_flag=True)    
+
+    perseus(victory_flag=False)    
+        
 

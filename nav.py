@@ -5,6 +5,9 @@ Vector goes straight stops when he detects a wall then turns 90 degrees to the r
 import anki_vector
 from anki_vector.util import degrees, distance_mm, speed_mmps
 from victory_emote import victory_emote
+from anki_vector.events import Events
+
+import threading
 
 
 said_text = False
