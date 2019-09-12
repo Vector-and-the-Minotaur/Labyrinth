@@ -20,7 +20,7 @@ def main():
     
     def go_straight_then_turn_right_ninty_degrees(distance):
         robot.behavior.say_text('I go straights.')
-        robot.behavior.drive_straight(distance_mm(distance.distance_mm - 50), speed_mmps(100))
+        robot.behavior.drive_straight(distance_mm(stopping_distance - 50), speed_mmps(100))
         robot.motors.stop_all_motors()
         print("Turn right 90 degrees.")
         robot.behavior.say_text("I go rights." )
