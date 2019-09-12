@@ -18,7 +18,7 @@ said_text = False
 #     print(name_data_list.faces[3].face_id)
 
 # conn = anki_vector.connection.Connection("Vector-A8P5", "172.16.12.102:443", "/Users/aliya/.anki_vector/Vector-A8P5-00600282.cert", "<tXsB9gznT2yRQnxo5QrGug==>", "<ControlPriorityLevel.DEFAULT_PRIORITY: 30>")
-# breakpoint()
+
 # conn.connect()
 
 with behavior.ReserveBehaviorControl():
