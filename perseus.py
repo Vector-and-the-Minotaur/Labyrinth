@@ -1,3 +1,8 @@
+"""
+THIS IS OBSOLETE NOW
+"""
+
+
 import anki_vector
 from anki_vector.util import distance_mm, speed_mmps, degrees
 
