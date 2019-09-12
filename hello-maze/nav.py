@@ -19,7 +19,12 @@ def main():
         object_dist = robot.proximity.last_sensor_reading.distance
         print(f'Distance from object: {object_dist.distance_mm}')
 
-        if object_dist.distance_mm == 400:
+        if object_dist.distance_mm == 30:
+            robot.behavior.say_text('I go straights.')
+            robot.behavior.drive_straight(distance_mm(800), speed_mmps(100))
+            robot.motors.stop_all_motors()
+            robot.behavior.say_text('I escaped the Minotaur.')
+        elif object_dist.distance_mm == 400:
             robot.behavior.say_text('I go straights.')
             robot.behavior.drive_straight(distance_mm(400), speed_mmps(100))
             object_dist = robot.proximity.last_sensor_reading.distance
