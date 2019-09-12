@@ -29,18 +29,20 @@ def turn_left_at_obstacle():
         say_hi()
         left_turn()
 
-def face_observed(): 
-    def on_robot_observed_face(robot, event_type, event, done):
+def face_observed(said_text): 
+    def on_robot_observed_face(robot, event_type, event, done, said_text):
+
+        face_flag = None
 
         name_data_list = robot.faces.request_enrolled_names()
-        global said_text
+        # global said_text
         if not said_text:
             if event.face_id == name_data_list.faces[3].face_id:
                 robot.behavior.say_text("I see a Merry!")
                 turn_left_at_obstacle()
                 said_text = True
                 done.set()
-                return True
+                face_flag = True
             
             if event.face_id == name_data_list.faces[0].face_id:
                 # nonlocal victory_face
@@ -48,10 +50,16 @@ def face_observed():
                 # victory_face = True
                 said_text = True
                 done.set()
-                return True
+                face_flag = True
+        
+        else:
+            face_flag=False
+            
 
-            else:
-                return False
+        if face_flag: 
+            return True
+        else: 
+            return False        
 
     args = anki_vector.util.parse_command_args()
     with anki_vector.Robot(args.serial, enable_face_detection=True) as robot:
@@ -93,11 +101,12 @@ def right_at_wall():
         robot.behavior.say_text('I go straights.')
         robot.behavior.drive_straight(distance_mm(stopping_distance), speed_mmps(50))
         robot.motors.stop_all_motors()
-        if face_observed() == False: 
+        face_seen = face_observed(said_text)
+        if face_seen is False: 
             print("Turn right 90 degrees.")
             robot.behavior.say_text("I go rights." )
             robot.behavior.turn_in_place(degrees(-90))
-        
+
         return False
        
 

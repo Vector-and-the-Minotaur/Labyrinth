@@ -10,16 +10,19 @@ from nav import right_at_wall
 args = anki_vector.util.parse_command_args()
 
 with anki_vector.Robot(args.serial, enable_face_detection=True) as robot:
+
+    def andromeda(victory_flag=False): 
+
+        if right_at_wall() is False: 
+
+                perseus(victory_flag=False)
     
     def perseus(victory_flag=False): 
         
-        if not victory_flag: 
-
-            if right_at_wall() == False: 
-                perseus(victory_flag=False)
-            else: 
-                perseus(victory_flag=True)    
+        if not victory_flag:
+            andromeda(victory_flag=False)    
+        else: 
+            perseus(victory_flag=True)    
 
     perseus(victory_flag=False)    
         
-
