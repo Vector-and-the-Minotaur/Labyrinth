@@ -33,6 +33,7 @@ from anki_vector.util import distance_mm, speed_mmps, degrees
 import time
 from turn_right_at_wall import right_at_wall
 from victory_emote import victory_emote
+
 said_text = False
 
 def turn_left_at_obstacle():
