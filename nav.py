@@ -5,6 +5,9 @@ Vector goes straight stops when he detects a wall then turns 90 degrees to the r
 import anki_vector
 from anki_vector.util import degrees, distance_mm, speed_mmps
 from victory_emote import victory_emote
+from anki_vector.events import Events
+
+import threading
 
 
 said_text = False
@@ -90,7 +93,8 @@ def right_at_wall():
         robot.behavior.say_text('I go straights.')
         robot.behavior.drive_straight(distance_mm(stopping_distance), speed_mmps(50))
         robot.motors.stop_all_motors()
-        if face_observed() == False: 
+        face_flag = face_observed()
+        if face_flag == False: 
             print("Turn right 90 degrees.")
             robot.behavior.say_text("I go rights." )
             robot.behavior.turn_in_place(degrees(-90))

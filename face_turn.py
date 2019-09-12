@@ -76,7 +76,7 @@ def main():
                 done.set()
 
             else:
-                right_at_wall()
+                return False
 
     args = anki_vector.util.parse_command_args()
     with anki_vector.Robot(args.serial, enable_face_detection=True) as robot:
