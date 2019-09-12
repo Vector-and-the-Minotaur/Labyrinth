@@ -26,11 +26,13 @@ he finishes speaking.
 import threading
 
 import anki_vector
+from anki_vector import behavior
 from anki_vector.events import Events
 from anki_vector.util import degrees
 from anki_vector.util import distance_mm, speed_mmps, degrees
 import time
-
+from turn_right_at_wall import right_at_wall
+from victory_emote import victory_emote
 said_text = False
 
 def turn_left_at_obstacle():
@@ -40,10 +42,6 @@ def turn_left_at_obstacle():
         def left_turn():
             robot.behavior.turn_in_place(degrees(90))
 
-        # TODO: only move straight till he sees a wall.
-
-        # def move_straight():
-        #     robot.behavior.drive_straight(distance_mm(300), speed_mmps(100))
 
         def say_hi():
             args = anki_vector.util.parse_command_args()
@@ -53,12 +51,13 @@ def turn_left_at_obstacle():
 
         say_hi()
         left_turn()
-        # move_straight()
 
 def main():
-    current_face = 0
+
+    # victory_face = False
+
     def on_robot_observed_face(robot, event_type, event, done):
-        # print(event.face_id)
+
         name_data_list = robot.faces.request_enrolled_names()
         global said_text
         if not said_text:
@@ -67,11 +66,16 @@ def main():
                 turn_left_at_obstacle()
                 said_text = True
                 done.set()
+            
             if event.face_id == name_data_list.faces[0].face_id:
-                robot.behavior.say_text("I see a Raven! I win.")
+                # nonlocal victory_face
+                victory_emote()
+                # victory_face = True
                 said_text = True
                 done.set()
 
+            else:
+                right_at_wall()
 
     args = anki_vector.util.parse_command_args()
     with anki_vector.Robot(args.serial, enable_face_detection=True) as robot:
@@ -96,7 +100,9 @@ def main():
 
 if __name__ == '__main__':
     count = 0
+    # nonlocal victory_face
+    # while not victory_face:
     while count < 3:
         count += 1
         main()
-        time.sleep(20)
+        # time.sleep(20)
