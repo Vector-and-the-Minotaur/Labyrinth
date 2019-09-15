@@ -1,27 +1,3 @@
-#!/usr/bin/env python3
-
-# Copyright (c) 2018 Anki, Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License in the file LICENSE.txt or at
-#
-#     https://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-"""Wait for Vector to see a face, and then print output to the console.
-
-This script demonstrates how to set up a listener for an event. It
-subscribes to event 'robot_observed_face'. When that event is dispatched,
-method 'on_robot_observed_face' is called, which prints text to the console.
-Vector will also say "I see a face" one time, and the program will exit when
-he finishes speaking.
-"""
 
 import threading
 
@@ -33,6 +9,7 @@ from anki_vector.util import distance_mm, speed_mmps, degrees
 import time
 from turn_right_at_wall import right_at_wall
 from victory_emote import victory_emote
+
 said_text = False
 
 def turn_left_at_obstacle():
@@ -53,6 +30,13 @@ def turn_left_at_obstacle():
         left_turn()
 
 def main():
+     def on_robot_observed_face(robot, event_type, event, done):
+        print("Vector sees a face")
+        global said_text
+        if not said_text:
+            said_text = True
+            robot.behavior.say_text("I see a face!")
+            done.set()
 
     # victory_face = False
 
@@ -73,9 +57,6 @@ def main():
                 # victory_face = True
                 said_text = True
                 done.set()
-
-            else:
-                right_at_wall()
 
     args = anki_vector.util.parse_command_args()
     with anki_vector.Robot(args.serial, enable_face_detection=True) as robot:
