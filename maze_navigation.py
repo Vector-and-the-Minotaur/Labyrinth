@@ -31,29 +31,13 @@ def turn_right():
         right_turn()
         robot.motors.stop_all_motors()
 
-def do_shit():
-    args = anki_vector.util.parse_command_args()
-
-    with anki_vector.Robot() as robot:
-
-        robot.motors.stop_all_motors()
-        robot.behavior.say_text("I see a Merry!")
-
-        object_dist = robot.proximity.last_sensor_reading.distance
-        stopping_distance = object_dist.distance_mm - 50.0
-        print(f'Distance from object: {object_dist.distance_mm}')
-        print(f'Stopping distance: {stopping_distance}')
-        robot.behavior.say_text('I finally did it')
-        robot.motors.stop_all_motors()
-
-    look_at_wall()
-
 def look_for_face():
-
+    #Vector scans the object in front of him for a face
     def on_robot_observed_face(robot, event_type, event, done):
         global said_text
         name_data_list = robot.faces.request_enrolled_names()
         if not said_text:
+            #Vector checks to see if the face he's currently looking at is Merrys
             if event.face_id == name_data_list.faces[3].face_id:
                 robot.behavior.turn_in_place(degrees(90))
                 robot.behavior.drive_straight(200, speed_mmps(70))
@@ -62,8 +46,8 @@ def look_for_face():
                 print('turned left!!!!')
                 said_text = True
                 done.set()
-            
-            elif event.face_id == name_data_list.faces[0].face_id:
+            #Vector checks to see if the face he's currently looking at is Ravens
+            if event.face_id == name_data_list.faces[0].face_id:
                 robot.behavior.drive_straight(200, speed_mmps(50))
                 robot.behavior.say_text("I see a Raven!")
                 victory_emote()
@@ -73,7 +57,7 @@ def look_for_face():
     args = anki_vector.util.parse_command_args()
     with anki_vector.Robot(args.serial, enable_face_detection=True) as robot:
 
-        # If necessary, move Vector's Head and Lift to make it easy to see his face
+        # Move vectors head to look at the level of the pictures in the maze
         robot.behavior.set_head_angle(degrees(18.0))
         robot.behavior.set_lift_height(0.0)
 
@@ -100,12 +84,13 @@ def look_at_wall():
             print("Vector is currently charging.")
             robot.behavior.drive_off_charger()
             robot.behavior.say_text('Charge.')
-        
+        #Check for distance of next wall. Vector sees max of 400mm away. If his next object comes back as 400mm he's told to go move forward 400mm and then check again for objects.
         object_dist = robot.proximity.last_sensor_reading.distance
         print(f'Distance from object: {object_dist.distance_mm}')
         if object_dist.distance_mm == 400:
             robot.behavior.say_text('I am free!! You remind me of the babe! The babe with the power.')
             robot.behavior.drive_straight(distance_mm(400), speed_mmps(100))
+            #Once vector approaches wall, he willl scan for a face. If no face is found he will turn right.
             look_for_face()
             object_dist = robot.proximity.last_sensor_reading.distance
             print(f'Distance from object: {object_dist.distance_mm}')
@@ -124,7 +109,7 @@ def look_at_wall():
                 look_for_face()
                 print("Turn right 90 degrees.")
                 robot.behavior.say_text("I go rights." )
-                robot.behavior.turn_in_place(degrees(-90))
+                turn_right()
         if object_dist.distance_mm < 400:
             stopping_distance = object_dist.distance_mm - 35.0
             robot.behavior.say_text('I go strights!!')
@@ -134,7 +119,7 @@ def look_at_wall():
             look_for_face()
             print("Turn right 90 degrees.")
             robot.behavior.say_text("I go rights." )
-            robot.behavior.turn_in_place(degrees(-90))
+            turn_right()
 
 if __name__ == '__main__':
 
