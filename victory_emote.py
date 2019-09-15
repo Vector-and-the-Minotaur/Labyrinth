@@ -27,5 +27,6 @@ def victory_emote():
         emote()
         green_eyes()
 
+
 if __name__ == "__main__":
         victory_emote()
